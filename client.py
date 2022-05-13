@@ -6,6 +6,7 @@ from attr import Attribute
 from colorama import Fore, init, Back
 import re
 import RSA
+import json
 
 # init colors
 init()
@@ -25,7 +26,6 @@ client_color = random.choice(colors)
 # put the private (network) IP address (e.g 192.168.1.2)
 SERVER_HOST = "127.0.0.1"
 SERVER_PORT = 5002 # server's port
-separator_token = "<SEP>" # we will use this to separate the client name & message
 
 # initialize TCP socket
 s = socket.socket()
@@ -36,18 +36,23 @@ print("[+] Connected.")
 
 # prompt the client for a name
 name = input("Enter your name: ")
+print('Enter your private key in the order n then d')
+privateMod = int(input('n: '))
+privateExp = int(input('d: '))
+
+print('Enter the public key of the receiver in the order n then e')
+publicMod = int(input('n: '))
+publicExp = int(input('e: '))
 
 def listen_for_messages():
     while True:
-        message = s.recv(1024).decode()
-        cipher = ''
-        try:
-            cipher = re.search('&(.+?)&', message).group(1)
-            print('cipher: ', cipher)
-        except AttributeError:
-            pass
-        message = message.replace('&'+cipher+'&', RSA.getPlaintext(cipher))
-        print("\n" + message)
+        data = s.recv(1024).decode()
+        data = json.loads(data)
+        message = data.get("message")
+        senderName = data.get("sendername")
+        if (senderName != name):
+            message = RSA.getPlaintext(message, privateMod, privateExp)
+            print('\n' + data.get("header") + message + data.get("footer"))
 
 # make a thread that listens for messages to this client & print them
 t = Thread(target=listen_for_messages)
@@ -58,17 +63,17 @@ t.start()
 
 while True:
     # input message we want to send to the server
-    to_send =  input()
+    message =  input()
     # a way to exit the program
-    if to_send.lower() == 'q':
+    if message.lower() == 'q':
         break
     #encrypt message
-    to_send = RSA.getCiphertext(to_send)
+    ciphertext = RSA.getCiphertext(message, publicMod, publicExp)
     # add the datetime, name & the color of the sender
     date_now = datetime.now().strftime('%Y-%m-%d %H:%M:%S') 
-    to_send = f"{client_color}[{date_now}] {name}{separator_token} &{to_send}&{Fore.RESET}"
     # finally, send the message
-    s.send(to_send.encode())
-
+    data = json.dumps({"header": f"{client_color}[{date_now}] {name}: ", "message": ciphertext, "footer": f"{Fore.RESET}", "sendername": name})
+    s.send(data.encode())
+    print(f"{client_color}[{date_now}] {name}: {message}{Fore.RESET}")
 # close the socket
 s.close()

@@ -54,25 +54,48 @@ def Encrypt(m, n, e):
     c = ConvertToStr(PowMod(ConvertToInt(m), e, n))
     return c
 
-def Decrypt(c, p, q, e):
-    Q = (p-1)*(q-1)
-    d = InvertModulo(e, Q)
+# def Decrypt(c, p, q, e):
+#     Q = (p-1)*(q-1)
+#     d = InvertModulo(e, Q)
+#     c = ConvertToInt(c)
+#     m = ConvertToStr(PowMod(c, d, p*q))
+#     return m
+
+
+def Decrypt(c, n, d):
     c = ConvertToInt(c)
-    m = ConvertToStr(PowMod(c, d, p*q))
+    m = ConvertToStr(PowMod(c, d, n))
     return m
 
-
-def getCiphertext(message, p = 790383132652258876190399065097, q = 662503581792812531719955475509, exponent = 23917):
-    modulo = p * q
+def getCiphertext(message, modulo = 17, exponent = 23917):
     ciphertext = Encrypt(message, modulo, exponent)
-    # message = Decrypt(ciphertext, p, q, exponent)
-    # print(message)
     return ciphertext
 
-def getPlaintext(ciphertext, p = 790383132652258876190399065097, q = 662503581792812531719955475509, exponent = 23917):
-    message = Decrypt(ciphertext, p, q, exponent)
+def getPlaintext(ciphertext, modulo = 17, exponent = 23917):
+    message = Decrypt(ciphertext, modulo, exponent)
     return message
 
-cipertext = getCiphertext('hello')
-print(cipertext, getPlaintext(cipertext))
+# cipertext = getCiphertext('hello', 523631656370745185641961785048490596607211047839379680209373)
+# print(cipertext, getPlaintext(cipertext, 523631656370745185641961785048490596607211047839379680209373, 49479765162766405466857617351938170521288251316432691224293))
+
+# p = 790383132652258876190399065097
+# q = 662503581792812531719955475509
+# e = 23917
+# d = 49479765162766405466857617351938170521288251316432691224293
+# n = 523631656370745185641961785048490596607211047839379680209373
+
+
+# Q = (p-1)*(q-1)
+# d = InvertModulo(23917, Q)
+# print(d)
+#49479765162766405466857617351938170521288251316432691224293 inverse of 23917 in mod 523631656370745185641961785048490596607211047839379680209373
+
+
+# p2 = 656917682542437675078478868539
+# q2 = 1263581691331332127259083713503
+# e2 = 25969
+# d2 = 340414976139489631127124457943643467611960690702259322262729
+# n2 = 830069156372432509928666201723843242135846274670597876182117
+# cipertext = getCiphertext('helloiiii', 830069156372432509928666201723843242135846274670597876182117, 25969)
+# print(cipertext, getPlaintext(cipertext, 830069156372432509928666201723843242135846274670597876182117, 340414976139489631127124457943643467611960690702259322262729))
 
