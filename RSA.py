@@ -107,3 +107,4 @@ def splitString(str, n = 20):
 
 
 print(PowMod(12, 1, 7))
+print(InvertModulo(12, 7))

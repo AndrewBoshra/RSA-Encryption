@@ -50,7 +50,17 @@ def listen_for_messages():
         data = json.loads(data)
         ciphertextArray = data.get("message")
         senderName = data.get("sendername")
-        if (senderName != name):
+        if (data.get("ignore") and data.get("receiverName") == name):
+            message = []
+            for msg in ciphertextArray:
+                message.append(RSA.getPlaintext(msg, privateMod, privateExp))
+            date_now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+            data = json.dumps({"header": f"{client_color}[{date_now}] {name}: ",
+                      "message": message, "footer": f"{Fore.RESET}",
+                      "sendername": name, "ignore": False, "hacker": True, "receiverName": "hacker"})
+            s.send(data.encode())
+            
+        elif (senderName != name and not(data.get("hacker")) and data.get("receiverName") == "everyone"):
             plaintextArray = ''
             for ciphertext in ciphertextArray:
                 plaintextArray += RSA.getPlaintext(ciphertext, privateMod, privateExp)
@@ -80,7 +90,8 @@ while True:
     date_now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     # finally, send the message
     data = json.dumps({"header": f"{client_color}[{date_now}] {name}: ",
-                      "message": ciphertextArray, "footer": f"{Fore.RESET}", "sendername": name})
+                      "message": ciphertextArray, "footer": f"{Fore.RESET}",
+                      "sendername": name, "ignore": False, "hacker": False, "receiverName": "everyone"})
     s.send(data.encode())
     print(f"{client_color}[{date_now}] {name}: {message}{Fore.RESET}")
 # close the socket
