@@ -6,6 +6,7 @@ from attr import Attribute
 from colorama import Fore, init, Back
 import RSA
 import json
+import jsonutils
 
 # init colors
 init()
@@ -35,14 +36,31 @@ print("[+] Connected.")
 
 # prompt the client for a name
 name = input("Enter your name: ")
-print('Enter your private key in the order n then d')
-privateMod = int(input('n: '))
-privateExp = int(input('d: '))
+# print('Enter your private key in the order n then d')
+# privateMod = int(input('n: '))
+# privateExp = int(input('d: '))
 
-print('Enter the public key of the receiver in the order n then e')
-publicMod = int(input('n: '))
-publicExp = int(input('e: '))
+# print('Enter the public key of the receiver in the order n then e')
+# publicMod = int(input('n: '))
+# publicExp = int(input('e: '))
+print('There are two modes 1-> all keys auto generated, mode 2 choose p, q, e or just all')
+mode = int(input('Enter the mode of operation: '))
+privateMod = 23
+privateExp = 7
+if mode == 1:
+    print('test')
+    privateMod, privateExp, randomE = RSA.generateKeys()
+    publicKey = {
+        "name": name,
+        "publicmod": privateMod,
+        "publicexp": randomE
+    }
+    jsonutils.writeJson(publicKey, 'PublicKeys.json')
 
+print(privateMod, privateExp)
+recvName = input('Enter the receiver name: ')
+publicMod = 11
+publicExp = 3
 
 def listen_for_messages():
     while True:
@@ -81,6 +99,7 @@ while True:
     # a way to exit the program
     if message.lower() == 'q':
         break
+    publicMod, publicExp = jsonutils.getUserPU(recvName)
     # encrypt message
     msgArray = RSA.splitString(message)
     ciphertextArray = []

@@ -50,8 +50,17 @@ def InvertModulo(a, n):
         b = (b % n + n) % n # we don't want -ve integers
     return b
 
-def generatePrime(min, max):
+def generatePrime(min=1000000000, max=1000000000000):
     return sympy.randprime(min, max)
+
+def generateKeys(min=1000000000, max=1000000000000):
+    p = generatePrime(min, max)
+    q = generatePrime(min, max)
+    n = p*q
+    phi = (p-1)*(q-1)
+    e = generatePrime(min, max)
+    d = InvertModulo(e, phi)
+    return n, d, e
 
 # %% Question 1
 def Encrypt(m, n, e):
@@ -108,3 +117,8 @@ def splitString(str, n = 20):
 # n2 = 830069156372432509928666201723843242135846274670597876182117
 # cipertext = getCiphertext('helloiiii', 830069156372432509928666201723843242135846274670597876182117, 25969)
 # print(cipertext, getPlaintext(cipertext, 830069156372432509928666201723843242135846274670597876182117, 340414976139489631127124457943643467611960690702259322262729))
+
+#print(InvertModulo(237677725889, 320301039783313832006873))
+# cipher = getCiphertext('hello', 320301039783313832006873, 237677725889)
+# plain = getPlaintext(cipher, 320301039783313832006873, 307381870885372871600496)
+# print(plain)

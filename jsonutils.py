@@ -18,9 +18,10 @@ def getUserPU(receivername, filename='PublicKeys.json'):
     with open(filename,'r+') as file:
         # First we load existing data into a dict.
         file_data = json.load(file)
-        for obj in file_data:
+        for obj in file_data.get("publickeys"):
             if obj.get("name") == receivername:
                 return obj.get("publicmod"), obj.get("publicexp")
+        return False
 
 # newdata = {
 #     "name": "user3",
@@ -29,4 +30,5 @@ def getUserPU(receivername, filename='PublicKeys.json'):
 # }
 # writeJson(newdata)
 # writeJson(newdata)
+print(getUserPU('andrew'))
         
