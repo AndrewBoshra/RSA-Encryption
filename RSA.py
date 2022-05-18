@@ -1,5 +1,6 @@
 import sys, threading
 import numpy as np
+import sympy
 
 sys.setrecursionlimit(10**7)
 threading.stack_size(2**27)
@@ -48,6 +49,9 @@ def InvertModulo(a, n):
     if b < 0:
         b = (b % n + n) % n # we don't want -ve integers
     return b
+
+def generatePrime(min, max):
+    return sympy.randprime(min, max)
 
 # %% Question 1
 def Encrypt(m, n, e):

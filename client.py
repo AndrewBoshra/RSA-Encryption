@@ -77,6 +77,7 @@ t.start()
 while True:
     # input message we want to send to the server
     message = input()
+    #reciver = input('receiver name: ')
     # a way to exit the program
     if message.lower() == 'q':
         break
