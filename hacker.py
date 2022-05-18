@@ -62,7 +62,7 @@ while True:
         for i in range(len(ciphertextArray)):
             intCipher = RSA.ConvertToInt(ciphertextArray[i])
             msg = RSA.ConvertToStr(RSA.PowMod(intCipher*r, 1, publicMod))
-            ciphertextArray[i] = RSA.getCiphertext(msg, publicMod, publicExp)
+            ciphertextArray[i] = msg #RSA.getCiphertext(msg, publicMod, publicExp)
         # add the datetime, name & the color of the sender
         date_now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         # finally, send the message
