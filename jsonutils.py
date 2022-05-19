@@ -23,12 +23,7 @@ def getUserPU(receivername, filename='PublicKeys.json'):
                 return obj.get("publicmod"), obj.get("publicexp")
         return False
 
-# newdata = {
-#     "name": "user3",
-#     "publicmod": 123,
-#     "publicexp": 123
-# }
-# writeJson(newdata)
-# writeJson(newdata)
-print(getUserPU('andrew'))
-        
+def getJsonData(filename='CCAtestcases.json'):
+    with open(filename, 'r+') as file:
+        file_data = json.load(file)
+        return file_data.get("testcases")
