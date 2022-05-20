@@ -85,9 +85,3 @@ elif mode == 1:
         d = RSA.InvertModulo(e, phi)
         optainedPlaintext.append(CCA(ciphertext, n, e, d, r))
     selfCheck(optainedPlaintext, actualPlaintext)
-    
-
-
-
-
-
