@@ -43,12 +43,33 @@ name = input("Enter your name: ")
 # print('Enter the public key of the receiver in the order n then e')
 # publicMod = int(input('n: '))
 # publicExp = int(input('e: '))
+
+def getInput(msg,onErrorMsg,validator):
+    inp=input(msg)
+    while not validator(inp):
+        inp=input(onErrorMsg)
+    return inp
+
+def yesNoQuestion(msg):
+    def validateYesNo(inp:str):
+        return inp.lower()=='n' or inp.lower()=='y'
+    answer=getInput(msg+" y/n","Invalid choice : "+msg,validateYesNo)
+    return answer.lower()=='y'
+
+
+
+
 print('There are two modes 1-> all keys auto generated, mode 2 choose p, q, e or just all')
-mode = int(input('Enter the mode of operation: '))
+mode = -1
 privateMod = 23
 privateExp = 7
+while not mode==1 and not mode==2:
+    modeStr=input('Please Enter a mode of Operation (1 or 2): ')
+    if modeStr.isnumeric():
+        mode = int(modeStr)
+    
 if mode == 1:
-    print('test')
+    print('======================= Mode 1 ========================')
     privateMod, privateExp, randomE = RSA.generateKeys()
     publicKey = {
         "name": name,
@@ -56,6 +77,45 @@ if mode == 1:
         "publicexp": randomE
     }
     jsonutils.writeJson(publicKey, 'PublicKeys.json')
+elif mode==2:
+    while True:
+        p=1 ; q=1 ; e=1
+        print('======================= Mode 2 ========================')
+        if yesNoQuestion("Would you like to enter q?"):
+            q=int(getInput("Please Enter q: ","q must be prime, please enter a valid q:",RSA.isPrime))
+        else:
+            q=RSA.generatePrime()
+        print(f"q={q}")
+        if yesNoQuestion("Would you like to enter p?"):
+            p=int(getInput("Please Enter p: ","p must be a prime number, please enter a valid p:  ",RSA.isPrime))
+        else:
+            p=RSA.generatePrime()
+        print(f"p={p}")
+        
+        n=p*q
+        phi=(p-1)*(q-1)
+        
+        print(f"phi={phi}")
+        if p>=phi and q>=phi:
+            # no valid e
+            print("invalid combination")
+            continue            
+        
+        elif yesNoQuestion("Would you like to enter e?"):
+            def validateExp(e:str):
+                if not e.isnumeric():
+                    return False
+                e=int(e)
+                return e>1 and e<phi and RSA.GCD(e,phi)==1
+            e=int(getInput(f"Please Enter e: ","Invalid e : e must be coprime with phi={phi} and less than it e=",validateExp))
+        else:
+            #has not included 2 so that if p=3 and q=5 --> phi=8 so we cant choose e=2
+            e=RSA.generatePrime(3,phi)
+        print(f"e={e}")
+        break
+    privateMod=n
+    privateExp=RSA.InvertModulo(e,phi)
+    randomE=e
 
 print(privateMod, privateExp)
 recvName = input('Enter the receiver name: ')

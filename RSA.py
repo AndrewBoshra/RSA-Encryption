@@ -4,7 +4,17 @@ import sympy
 
 sys.setrecursionlimit(10**7)
 threading.stack_size(2**27)
-
+def isPrime(numStr):
+    if not numStr.isnumeric():
+        return False
+    num=int(numStr)
+    if num<=1:
+        return False
+    
+    for n in range(2,int(num**0.5)+1):
+        if num%n==0:
+            return False
+    return True
 def ConvertToInt(message_str):
   res = 0
   for i in range(len(message_str)):
