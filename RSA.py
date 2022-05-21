@@ -68,7 +68,7 @@ def generateKeys(min=1000000000, max=1000000000000):
     q = generatePrime(min, max)
     n = p*q
     phi = (p-1)*(q-1)
-    e = generatePrime(min, max)
+    e = generatePrime(2, phi)
     d = InvertModulo(e, phi)
     return n, d, e
 

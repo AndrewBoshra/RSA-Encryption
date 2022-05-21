@@ -1,0 +1,91 @@
+
+resultedP: 251
+resultedQ: 251
+resultedD: 48077
+executiontime: 9.012222290039062e-05
+key size: 16
+=========================
+resultedP: 907
+resultedQ: 991
+resultedD: 193933
+executiontime: 0.0002377033233642578
+key size: 20
+=========================
+resultedP: 3923
+resultedQ: 4019
+resultedD: 14796239
+executiontime: 0.0010690689086914062
+key size: 24
+=========================
+resultedP: 10391
+resultedQ: 15277
+resultedD: 109559623
+executiontime: 0.0017194747924804688
+key size: 28
+=========================
+resultedP: 34607
+resultedQ: 37139
+resultedD: 460122527
+executiontime: 0.011399507522583008
+key size: 32
+=========================
+resultedP: 162079
+resultedQ: 185707
+resultedD: 6801464287
+executiontime: 0.040964365005493164
+key size: 36
+=========================
+resultedP: 702787
+resultedQ: 913373
+resultedD: 101883305407
+executiontime: 0.1448345184326172
+key size: 40
+=========================
+resultedP: 3176843
+resultedQ: 3436921
+resultedD: 7627540594681
+executiontime: 0.6988558769226074
+key size: 44
+=========================
+resultedP: 10490551
+resultedQ: 14157797
+resultedD: 106624153325153
+executiontime: 2.385355234146118
+key size: 48
+=========================
+resultedP: 53334709
+resultedQ: 65356507
+resultedD: 1493777781416747
+executiontime: 10.467477560043335
+key size: 52
+=========================
+resultedP: 226681619
+resultedQ: 257268587
+resultedD: 17058703358492337
+executiontime: 41.88689303398132
+key size: 56
+=========================
+resultedP: 760373143
+resultedQ: 1037972891
+resultedD: 132206275021627993
+executiontime: 140.98209190368652
+key size: 60
+=========================
+resultedP: 2345396191
+resultedQ: 3672487537
+resultedD: 8553045833861967041
+executiontime: 288.2198488712311
+key size: 64
+=========================
+resultedP: 10916065847
+resultedQ: 14421371929
+resultedD: 36679518466844136889
+executiontime: 1394.38902592659
+key size: 68
+=========================
+resultedP: 39422250913
+resultedQ: 47648849623
+resultedD: 963094711052201162195
+executiontime: 5015.014265537262
+key size: 72
+=========================
