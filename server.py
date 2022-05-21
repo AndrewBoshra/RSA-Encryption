@@ -35,8 +35,6 @@ def listen_for_client(cs):
         else:
             # if we received a message, replace the <SEP> 
             # token with ": " for nice printing
-            #msg = msg.replace(separator_token, ": ")
-            #msg["header"] = msg.get("header").replace(separator_token, ": ")
             print(msg)
         # iterate over all connected sockets
         for client_socket in client_sockets:

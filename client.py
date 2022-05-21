@@ -36,13 +36,6 @@ print("[+] Connected.")
 
 # prompt the client for a name
 name = input("Enter your name: ")
-# print('Enter your private key in the order n then d')
-# privateMod = int(input('n: '))
-# privateExp = int(input('d: '))
-
-# print('Enter the public key of the receiver in the order n then e')
-# publicMod = int(input('n: '))
-# publicExp = int(input('e: '))
 
 def getInput(msg,onErrorMsg,validator):
     inp=input(msg)
@@ -155,7 +148,6 @@ t.start()
 while True:
     # input message we want to send to the server
     message = input()
-    #reciver = input('receiver name: ')
     # a way to exit the program
     if message.lower() == 'q':
         break
@@ -165,7 +157,6 @@ while True:
     ciphertextArray = []
     for msg in msgArray:
         ciphertextArray.append(RSA.getCiphertext(msg, publicMod, publicExp))
-    # ciphertext = RSA.getCiphertext(message, publicMod, publicExp)
     # add the datetime, name & the color of the sender
     date_now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     # finally, send the message
